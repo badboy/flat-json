@@ -1,0 +1,8 @@
+[package]
+name = "flat-json"
+version = "0.1.0"
+authors = ["Jan-Erik Rediger <janerik@fnordig.de>"]
+
+[dependencies]
+serde = "0.8"
+serde_json = "0.8"
