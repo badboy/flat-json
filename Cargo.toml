@@ -3,6 +3,18 @@ name = "flat-json"
 version = "0.1.0"
 authors = ["Jan-Erik Rediger <janerik@fnordig.de>"]
 
+description = "Turn every JSON document into a flat, greppable list of items"
+license = "MIT"
+repository = "https://github.com/badboy/flat-json"
+
+include = [
+  "README.md",
+  "LICENSE",
+  "Cargo.toml",
+  "src/**/*"
+]
+
 [dependencies]
 serde = "0.8"
 serde_json = "0.8"
+
