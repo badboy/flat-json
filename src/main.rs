@@ -16,9 +16,7 @@ fn handle_value(value: &Value, prefix: Option<String>) {
     match value {
         &Value::Null => scalar("<null>", prefix),
         &Value::Bool(ref b) => scalar(b, prefix),
-        &Value::I64(ref i) => scalar(i, prefix),
-        &Value::U64(ref i) => scalar(i, prefix),
-        &Value::F64(ref f) => scalar(f, prefix),
+        &Value::Number(ref i) => scalar(i, prefix),
         &Value::String(ref s) => scalar(format!("{:?}", s), prefix),
         &Value::Array(ref v) => {
             let prefix = prefix.unwrap_or_else(|| "".to_string());
