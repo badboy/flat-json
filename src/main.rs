@@ -1,9 +1,13 @@
 extern crate serde;
 extern crate serde_json;
+extern crate atty;
 
+use std::env;
 use std::io::{self, Read};
+use std::fs::File;
 use std::fmt::Display;
 use serde_json::Value;
+use atty::Stream;
 
 fn scalar<D: Display>(msg: D, prefix: Option<String>) {
     match prefix {
@@ -35,9 +39,24 @@ fn handle_value(value: &Value, prefix: Option<String>) {
     }
 }
 
-fn main() {
+fn get_json() -> String {
+    let args = env::args().skip(1).next();
+    let arg = args.unwrap_or("".to_string());
+    let use_stdin = arg == "-" || arg == "";
+
     let mut buffer = String::new();
-    io::stdin().read_to_string(&mut buffer).unwrap();
+    if !atty::is(Stream::Stdin) || use_stdin {
+        io::stdin().read_to_string(&mut buffer).unwrap();
+    } else {
+        let mut f = File::open(arg).unwrap();
+        f.read_to_string(&mut buffer).unwrap();
+    }
+
+    buffer
+}
+
+fn main() {
+    let buffer = get_json();
 
     let data: Value = match serde_json::from_str(&buffer) {
         Ok(data) => data,
